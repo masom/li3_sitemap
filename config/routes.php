@@ -22,10 +22,9 @@ Router::connect($base, array(), function($request){
 	$controllerParser = function($config){
 		$map = array();
 		foreach($config as $k => $v){
-			
 			$conditions = array();
 			$orders = array();
-			$fields = array('updated');
+			$fields = array('name','updated');
 			$limit = 100;
 			$options = compact('conditions','order','fields', 'limit');
 			
@@ -33,10 +32,11 @@ Router::connect($base, array(), function($request){
 			
 			if(is_array($v)){
 				//$k is model, $v is configuration
-				$options += $v;
+				$options = array_merge($options, $v);
 				$model = $k;
 			}
 			$class = explode('\\', (is_string($model) ? $model : get_class($model)));
+			
 			$map[$class[count($class) - 1]] = $model::all($options);
 		}
 		return $map;
@@ -48,7 +48,7 @@ Router::connect($base, array(), function($request){
 		if(is_array($v)){
 			//$k is the controller, $v are the models to map
 			$class = explode('\\', (is_string($k) ? $k : get_class($k)));
-			$sitemap[$class[count($class) - 1]] = $controllerParser($v);
+			$sitemap[$class[count($class) - 1]] = $controllerParser($v['models']);
 		}else{
 			//$v is the controller
 			$class = explode('\\', (is_string($v) ? $v : get_class($v)));

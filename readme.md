@@ -15,7 +15,9 @@ File: app/config/bootstrap/libraries.php
 	'sitemap'=> array(
 		'controllers' => array(
 			'app\controllers\Posts' => array(
-				'models'=>'app\models\Posts'
+				'models'=> array(
+					'app\models\Posts'
+				)
 			)
 		)
     )));
@@ -32,7 +34,7 @@ You can also pass options and configuration values:
 		),
 		'controllers' => array(
 			'app\controllers\Posts' => array(
-				'models'=>'app\models\Posts'
+				'models' => array('app\models\Posts')
 			)
 		)
     )));
@@ -45,17 +47,19 @@ Models can also be configured:
         'sitemap'=> array(
                 'controllers' => array(
                         'app\controllers\Posts' => array(
-                                'models'=>'app\models\Posts' => array(
-					'conditions' => array(
-						'published' => true
-					),
-					'fields' => array(
-						'_id',
-						'name',
-						'updated'
-					),
-					'order' => array(
-						'created' => 'desc'
+                                'models'=> array(
+					'app\models\Posts' => array(
+						'conditions' => array(
+							'published' => true
+						),
+						'fields' => array(
+							'_id',
+							'name',
+							'updated'
+						),
+						'order' => array(
+							'created' => 'desc'
+						)
 					)
 				)
                         )
