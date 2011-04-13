@@ -67,20 +67,3 @@ Models can also be configured:
                         )
                 )
     )));
-
-# Output:
-<pre>
-    <?xml version="1.0" encoding="UTF-8"?> 
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
-        <url> 
-            <loc>http://example/</loc> 
-            <lastmod>2011-04-13T16:25:57-04:00</lastmod> 
-            <changefreq>daily</changefreq> 
-            <priority>0.8</priority> 
-	</url> 
-        <url> 
-            <loc>http://example/posts/345</loc> 
-            <lastmod>2011-04-12T14:04:26-04:00</lastmod>
-        </url> 
-    </urlset>
-</pre>
