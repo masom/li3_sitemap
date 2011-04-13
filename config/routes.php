@@ -62,15 +62,21 @@ Router::connect($base, array(), function($request){
 		$type = 'xml';
 	}
 	
-	$response = new Response(compact('request'));
-	Media::render($response, compact('sitemap'), array(
+	$options = array(
 		'controller' => 'sitemaps',
 		'library' => 'li3_sitemap',
 		'template' => "index",
 		'type' => $type,
 		'layout' => 'default',
 		'request' => $request
-	));
+	);
+	
+	if(isset($config['sitemap']['view']) && is_array($config['sitemap']['view'])){
+		unset($options['library']);
+		$options = array_merge($options,$config['sitemap']['view']);
+	}
+	$response = new Response(compact('request'));
+	Media::render($response, compact('sitemap'), $options);
 	return $response;
 });
 ?>
