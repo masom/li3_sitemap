@@ -8,6 +8,8 @@ Getting the source
     git clone git://github.com/masom/li3_sitemap.git
 
 
+#Configuration
+
 Minimal Configuration
 
 File: app/config/bootstrap/libraries.php
@@ -66,8 +68,8 @@ Models can also be configured:
                 )
     )));
 
-* Output:
-
+# Output:
+<pre>
     <?xml version="1.0" encoding="UTF-8"?> 
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
         <url> 
@@ -81,3 +83,4 @@ Models can also be configured:
             <lastmod>2011-04-12T14:04:26-04:00</lastmod>
         </url> 
     </urlset>
+</pre>
