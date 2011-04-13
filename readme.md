@@ -3,6 +3,7 @@ li3_sitemap is a lightweight sitemap generator for the lithium php framework.
 #Installation
 
 Getting the source
+
     cd /path/to/app/libraries
     git clone git://github.com/masom/li3_sitemap.git
 
