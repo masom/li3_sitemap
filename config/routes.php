@@ -2,7 +2,7 @@
 use lithium\core\Libraries;
 use lithium\action\Response;
 use lithium\net\http\Router;
-use lithium\net\http\Media;
+use lithium\template\View;
 use lithium\core\Environment;
 
 $config = Libraries::get('li3_sitemap');
@@ -57,7 +57,7 @@ $sitemap = function($request){
 	}
 	
 	$defautlType = isset($config['sitemap']['type']) ? $config['sitemap']['type'] : "html";
-	$type = $request->params->type ?: $defautlType;
+	$type = $request->type ?: $defautlType;
 	
 	$options = array(
 		'controller' => 'sitemaps',
@@ -73,7 +73,18 @@ $sitemap = function($request){
 		$options = array_merge($options,$config['sitemap']['view']);
 	}
 	$response = new Response(compact('request'));
-	Media::render($response, compact('sitemap'), $options);
+	
+	$view  = new View(
+		array(
+
+		    'paths' => array(
+				'element' => '{:library}/views/elements/{:template}.{:type}.php',
+		        'template' => '{:library}/views/{:controller}/{:template}.{:type}.php',
+		        'layout'   => '{:library}/views/layouts/{:layout}.{:type}.php',
+		    )
+		));	
+		
+	$response->body = $view->render('all',	compact('sitemap'), $options);
 	return $response;
 };
 
