@@ -3,13 +3,13 @@ use lithium\core\Libraries;
 use lithium\action\Response;
 use lithium\net\http\Router;
 use lithium\net\http\Media;
+use lithium\core\Environment;
 
 $config = Libraries::get('li3_sitemap');
 $base = isset($config['sitemap']['url']) ? $config['url'] : '/sitemap';
 
-Router::connect($base, array(), function($request){
-	
-	
+$sitemap = function($request){
+
 	$config = Libraries::get('li3_sitemap');
 	
 	if(!isset($config['sitemap'])){
@@ -55,12 +55,9 @@ Router::connect($base, array(), function($request){
 			$sitemap[$class[count($class) - 1]] = null;
 		}
 	}
-	if(isset($config['sitemap']['type'])){
-		$type = $config['sitemap']['type'];
-	}else{
-		Media::type('xml', 'text/xml', array());
-		$type = 'xml';
-	}
+	
+	$defautlType = isset($config['sitemap']['type']) ? $config['sitemap']['type'] : "html";
+	$type = $request->params->type ?: $defautlType;
 	
 	$options = array(
 		'controller' => 'sitemaps',
@@ -78,5 +75,8 @@ Router::connect($base, array(), function($request){
 	$response = new Response(compact('request'));
 	Media::render($response, compact('sitemap'), $options);
 	return $response;
-});
+};
+
+Router::connect("{$base}.{:type}", array(), $sitemap);
+Router::connect($base, array(), $sitemap);
 ?>
