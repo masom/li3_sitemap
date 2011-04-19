@@ -1,4 +1,11 @@
 <?php
+/**
+ * li3_sitemap: Lightweight sitemap generator for Lithium
+ *
+ * @copyright     Copyright 2011, Martin Samson <pyrolian@gmail.com>
+ * @license       http://opensource.org/licenses/bsd-license.php The BSD License
+ */
+
 use lithium\core\Libraries;
 use lithium\action\Response;
 use lithium\net\http\Router;
