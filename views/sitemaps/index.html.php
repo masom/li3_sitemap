@@ -1,1 +1,3 @@
-<?php debug($sitemap);?>
+<pre>
+<?php var_dump($sitemap);?>
+</pre>
