@@ -8,6 +8,12 @@ use lithium\core\Libraries;
 
 class Sitemap extends \lithium\core\StaticObject{
 
+	/**
+	 * Renders the sitemap response based on the received request and configuration
+	 * @param object $request The request object
+	 * @throws Exception
+	 * @return object Response
+	 */
 	public static function render($request){
 		$config = Libraries::get('li3_sitemap');	
 		$sitemap = Sitemap::generate($config);
@@ -27,6 +33,11 @@ class Sitemap extends \lithium\core\StaticObject{
 		$response->body = $view->render('all',	compact('sitemap'), $viewOptions);
 		return $response;
 	}
+	/**
+	 * Parses the controllers configured for the sitemap and fetches associated data.
+	 * @param array $config The library configuration
+	 * @return array Sitemap
+	 */
 	private static function _controllerParser(array $config){
 		$map = array();
 		foreach($config as $k => $v){
@@ -49,7 +60,13 @@ class Sitemap extends \lithium\core\StaticObject{
 		}
 		return $map;
 	}
-	
+
+	/**
+	 * Generates the sitemap content
+	 * @param array $config Library configuration
+	 * @throws \Exception
+	 * @return array Sitemap
+	 */
 	public static function generate(array $config){
 		if (!isset($config['sitemap'])){
 			throw new \Exception("`sitemap` configuration for li3_sitemap must be set.");
@@ -74,6 +91,13 @@ class Sitemap extends \lithium\core\StaticObject{
 		}
 		return $sitemap;
 	}
+
+	/**
+	 * Configures the view to be rendered
+	 * @param object $request The request object
+	 * @param array $config Library configuration
+	 * @return array View options
+	 */
 	public static function configureView($request, array $config){
 		$defautlType = isset($config['sitemap']['type']) ? $config['sitemap']['type'] : "html";
 		$type = $request->type ?: $defautlType;
