@@ -1,8 +1,32 @@
 <?php 
 namespace li3_sitemap\extensions;
 
+use lithium\template\View;
+use lithium\core\Environment;
+use lithium\action\Response;
+use lithium\core\Libraries;
+
 class Sitemap extends \lithium\core\StaticObject{
 
+	public static function render($request){
+		$config = Libraries::get('li3_sitemap');	
+		$sitemap = Sitemap::generate($config);
+		$viewOptions = Sitemap::configureView($request, $config);
+		$response = new Response(compact('request'));
+		
+		$view  = new View(
+			array(
+	
+			    'paths' => array(
+					'element' => '{:library}/views/elements/{:template}.{:type}.php',
+			        'template' => '{:library}/views/{:controller}/{:template}.{:type}.php',
+			        'layout'   => '{:library}/views/layouts/{:layout}.{:type}.php',
+			    )
+			));	
+			
+		$response->body = $view->render('all',	compact('sitemap'), $viewOptions);
+		return $response;
+	}
 	private static function _controllerParser(array $config){
 		$map = array();
 		foreach($config as $k => $v){
